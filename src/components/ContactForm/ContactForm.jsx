@@ -4,10 +4,16 @@ import PropTypes from 'prop-types';
 //import ContactList from '../ContactList';
 
 class ContactForm extends Component {
-      state = {
-    name: "",
-    phone: "",
-  };
+    state = {
+        name: "",
+        phone: "",
+        contacts: [
+            { id: 'id-1', name: 'Rosie Simpson', phone: '459-12-56' },
+            { id: 'id-2', name: 'Hermione Kline', phone: '443-89-12' },
+            { id: 'id-3', name: 'Eden Clements', phone: '645-17-79' },
+            { id: 'id-4', name: 'Annie Copeland', phone: '227-91-26' },
+        ],
+    };
 
     handleChangeForm = ({ target }) => {
         const { name, value } = target
@@ -30,13 +36,20 @@ class ContactForm extends Component {
 
     validateForm = () => {
         const { name, phone } = this.state;
-        const { onCheckUnique } = this.props;
         if (!name || !phone) {
             alert('Some filed is empty')
             return false
         }
 
-        return onCheckUnique(name)
+        return this.onCheckUnique(name)
+    }
+
+    onCheckUnique = (name) => {
+        const { contacts } = this.state
+    
+        const isExistContact = !!contacts.find((contact) => contact.name === name)
+        isExistContact && alert('Contact is already exist')
+        return !isExistContact
     }
 
     resetForm = () => this.setState({ name: '', phone: '' });

@@ -20,13 +20,7 @@ class App extends Component {
     contacts: [...prevState.contacts, newContact],
   }))
 
-  handleCheckUnique = (name) => {
-    const { contacts } = this.state
-    
-    const isExistContact = !!contacts.find((contact) => contact.name === name)
-    isExistContact && alert('Contact is already exist')
-    return !isExistContact
-  }
+
 
   handleRemoveContact = (id) => {
     this.setState(prevState => {
@@ -49,9 +43,9 @@ class App extends Component {
     const visibleContacts = this.getVisibleContacts();
     return (<div>
       <h2>Phonebook</h2>
-      <ContactForm onAdd={this.handleAddContact} onCheckUnique={this.handleCheckUnique}/>
+      <ContactForm onAdd={this.handleAddContact}/>
       <h2>Contacts</h2>
-      <Filter filter={filter} onChange={this.handleFilterChange} onCheckUnique={this.handleCheckUnique} />
+      <Filter filter={filter} onChange={this.handleFilterChange} />
       <ContactList contacts={visibleContacts} onRemove={this.handleRemoveContact} />
     </div>
     );
