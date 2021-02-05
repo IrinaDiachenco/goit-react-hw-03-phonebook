@@ -7,12 +7,10 @@ import Filter from '../Filter/Filter';
 
 class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', phone: '459-12-56' },
+    contacts: [      { id: 'id-1', name: 'Rosie Simpson', phone: '459-12-56' },
       { id: 'id-2', name: 'Hermione Kline', phone: '443-89-12' },
       { id: 'id-3', name: 'Eden Clements', phone: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', phone: '227-91-26' },
-    ],
+      { id: 'id-4', name: 'Annie Copeland', phone: '227-91-26' },],
     filter: '',
   }
 
@@ -39,17 +37,19 @@ class App extends Component {
   }
 
     componentDidMount() {
-    const savedContacts = JSON.parse(localStorage.getItem("contacts"));
-
-    savedContacts && this.setState({ contacts: savedContacts });
+    const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
+    if (parsedContacts) {
+      this.setState(() => {
+        return {
+          contacts: parsedContacts,
+        };
+      });
+    }
   }
 
-  componentDidUpdate(prevState) {
-    if (
-      this.state.contacts !== prevState.contacts &&
-      this.state.contacts.length > 0
-    ) {
-      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
     }
   }
 
