@@ -14,7 +14,8 @@ class App extends Component {
     filter: '',
   }
 
-  handleAddContact = (newContact) => this.setState(prevState => ({
+  handleAddContact = (newContact) =>
+    this.setState(prevState => ({
     contacts: [...prevState.contacts, newContact],
   }))
 
@@ -47,7 +48,7 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevState) {
     if (prevState.contacts !== this.state.contacts) {
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
     }

@@ -39,12 +39,18 @@ class ContactForm extends Component {
         return this.onCheckUnique(name)
     }
 
-    onCheckUnique = (name) => {
-        const { contacts } = this.state
-    
-        const isExistContact = !!contacts.find((contact) => contact.name === name)
-        isExistContact && alert('Contact is already exist')
-        return !isExistContact
+    onCheckUnique = (name, phone) => {
+        const newContact = {
+            id: uuidv4(),
+            name,
+            phone,
+        };
+        const isExistContact = this.state.contacts.find((contact) => newContact.name === contact.name);
+        if (isExistContact) {
+            return alert('Contact is already exist');
+        }
+        //isExistContact && alert('Contact is already exist')
+        //return !isExistContact
     }
 
     resetForm = () => this.setState({ name: '', phone: '' });
