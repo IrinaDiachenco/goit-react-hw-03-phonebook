@@ -12,7 +12,7 @@ class ContactForm extends Component {
     state = {
         name: "",
         phone: "",
-        //contacts: [],
+        contacts: [],
     };
 
     handleChangeForm = ({ target }) => {
@@ -59,6 +59,7 @@ class ContactForm extends Component {
 
     render() {
         const { name, phone } = this.state;
+        //const { contacts } = this.props;
         return (
             <form onSubmit={this.handleFormSubmit}>
                 <input type="text" name="name" placeholder="Enter name" value={name} onChange={this.handleChangeForm}/>

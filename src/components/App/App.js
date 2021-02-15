@@ -61,7 +61,7 @@ class App extends Component {
     const visibleContacts = this.getVisibleContacts();
     return (<div>
       <h2>Phonebook</h2>
-      <ContactForm onAdd={this.handleAddContact} contacts={this.contacts}/>
+      <ContactForm onAdd={this.handleAddContact} contacts={this.state.contacts}/>
       <h2>Contacts</h2>
       <Filter filter={filter} onChange={this.handleFilterChange} />
       <ContactList contacts={visibleContacts} onRemove={this.handleRemoveContact} />
