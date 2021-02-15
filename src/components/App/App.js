@@ -6,6 +6,10 @@ import ContactList from '../ContactList/ContactList';
 import Filter from '../Filter/Filter';
 
 class App extends Component {
+ static defaultProps = {
+    name: '',
+    number: '',
+  };
   state = {
     contacts: [      { id: 'id-1', name: 'Rosie Simpson', phone: '459-12-56' },
       { id: 'id-2', name: 'Hermione Kline', phone: '443-89-12' },
@@ -18,8 +22,6 @@ class App extends Component {
     this.setState(prevState => ({
     contacts: [...prevState.contacts, newContact],
   }))
-
-
 
   handleRemoveContact = (id) => {
     this.setState(prevState => {
@@ -48,7 +50,7 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevState.contacts !== this.state.contacts) {
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
     }
@@ -59,7 +61,7 @@ class App extends Component {
     const visibleContacts = this.getVisibleContacts();
     return (<div>
       <h2>Phonebook</h2>
-      <ContactForm onAdd={this.handleAddContact}/>
+      <ContactForm onAdd={this.handleAddContact} contacts={this.contacts}/>
       <h2>Contacts</h2>
       <Filter filter={filter} onChange={this.handleFilterChange} />
       <ContactList contacts={visibleContacts} onRemove={this.handleRemoveContact} />

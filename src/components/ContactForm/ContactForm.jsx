@@ -4,10 +4,15 @@ import PropTypes from 'prop-types';
 //import ContactList from '../ContactList';
 
 class ContactForm extends Component {
+  static propTypes = {
+    contacts: PropTypes.array.isRequired,
+    filter: PropTypes.string,
+  };
+
     state = {
         name: "",
         phone: "",
-        contacts: [],
+        //contacts: [],
     };
 
     handleChangeForm = ({ target }) => {
@@ -20,12 +25,13 @@ class ContactForm extends Component {
 
         const { name, phone } = this.state;
         const { onAdd } = this.props;
-
+        //this.setState({ name:"", phone:""})
         const isValidateForm = this.validateForm()
 
         if (!isValidateForm) return
         
         onAdd({ id: uuidv4(), name, phone })
+        
         this.resetForm()
     };
 
@@ -39,13 +45,9 @@ class ContactForm extends Component {
         return this.onCheckUnique(name)
     }
 
-    onCheckUnique = (name, phone) => {
-        const newContact = {
-            id: uuidv4(),
-            name,
-            phone,
-        };
-        const isExistContact = this.state.contacts.find((contact) => newContact.name === contact.name);
+    onCheckUnique = (name) => {
+        const {contacts} = this.props
+        const isExistContact = !!contacts.find((contact) => contact.name === name);
         if (isExistContact) {
             return alert('Contact is already exist');
         }
@@ -61,7 +63,7 @@ class ContactForm extends Component {
             <form onSubmit={this.handleFormSubmit}>
                 <input type="text" name="name" placeholder="Enter name" value={name} onChange={this.handleChangeForm}/>
                 <input type="tel" name="phone" placeholder="Enter phone number" value={phone} onChange={this.handleChangeForm} />
-                <button type='submit'>Add Contact</button>
+                <button type='submit'>Add Contact</button>    
             </form>
         )
     }
@@ -69,7 +71,8 @@ class ContactForm extends Component {
 
 ContactForm.propTypes = {
         name: PropTypes.string,
-    phone: PropTypes.number,
+    //phone: PropTypes.number,
+    //newContact: PropTypes.string,
         onCheckUnique: PropTypes.func,
 };
 
