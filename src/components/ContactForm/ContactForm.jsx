@@ -12,7 +12,7 @@ class ContactForm extends Component {
     state = {
         name: "",
         phone: "",
-        contacts: [],
+        //contacts: [],
     };
 
     handleChangeForm = ({ target }) => {
@@ -25,37 +25,34 @@ class ContactForm extends Component {
 
         const { name, phone } = this.state;
         const { onAdd } = this.props;
-        //this.setState({ name:"", phone:""})
         const isValidateForm = this.validateForm()
 
-        if (!isValidateForm) return
-        
-        onAdd({ id: uuidv4(), name, phone })
-        
-        this.resetForm()
+        if (!isValidateForm)
+            onAdd({ id: uuidv4(), name, phone })
+            this.resetForm()    
     };
 
     validateForm = () => {
         const { name, phone } = this.state;
+        const { contacts } = this.props
+        const isExistContact = !!contacts.find((contact) => contact.name === name);
         if (!name || !phone) {
             alert('Some filed is empty')
-            return false
+            return true
         }
-
-        return this.onCheckUnique(name)
-    }
-
-    onCheckUnique = (name) => {
-        const {contacts} = this.props
-        const isExistContact = !!contacts.find((contact) => contact.name === name);
         if (isExistContact) {
-            return alert('Contact is already exist');
+            alert('Contact is already exist');
+            return true
         }
-        //isExistContact && alert('Contact is already exist')
-        //return !isExistContact
-    }
+    }   
+        //return onCheckUnique = (name) => {
+            //isExistContact && alert('Contact is already exist')
+            //return !isExistContact   
+        //}
 
-    resetForm = () => this.setState({ name: '', phone: '' });
+    resetForm = () => {
+        this.setState({ name: '', phone: '' });
+    };
 
     render() {
         const { name, phone } = this.state;
@@ -72,8 +69,7 @@ class ContactForm extends Component {
 
 ContactForm.propTypes = {
         name: PropTypes.string,
-    //phone: PropTypes.number,
-    //newContact: PropTypes.string,
+        phone: PropTypes.number,
         onCheckUnique: PropTypes.func,
 };
 
